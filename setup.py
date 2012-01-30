@@ -19,6 +19,7 @@ setup(name='evedb',
       zip_safe=False,
       install_requires=[
           # -*- Extra requirements: -*-
+          'sqlalchemy',
       ],
       entry_points="""
       # -*- Entry points: -*-
