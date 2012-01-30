@@ -39,8 +39,8 @@ class Db(object):
 
 def init_db(src=None):
     if src is None:
-        Db.src = sqllite_src
-    Db._conn = sqlalchemy.create_engine(src)
+        Db._src = sqllite_src
+    Db._conn = sqlalchemy.create_engine(Db._src)
     Db._metadata = sqlalchemy.MetaData()
     # stop sqlalchemy from complaining about types (don't need them 
     # for now).
