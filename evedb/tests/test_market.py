@@ -11,11 +11,12 @@ class TestMarketGroup(TestCase):
     def tearDown(self):
         pass
 
-    def test_000_original_adapter(self):
+    def test_0001_groupnames(self):
         group = Group()
         results = group.getMarketGroup()
-        self.assertEqual(results[2]['marketGroupName'], u'Blueprints')
-        self.assertEqual(results[3]['marketGroupName'], u'Drones')
+        names = [i['marketGroupName'] for i in results]
+        self.assertTrue(u'Blueprints' in names)
+        self.assertTrue(u'Drones' in names)
 
 
 def test_suite():
