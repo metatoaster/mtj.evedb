@@ -1,12 +1,8 @@
+import os
 from os.path import dirname
 import logging
 
 import sqlalchemy
-
-
-# dummy default
-# XXX OS dependent.
-sqllite_src = 'sqlite:///%s/cru110-sqlite3-v1.db' % dirname(__file__)
 
 
 class Db(object):
@@ -39,11 +35,21 @@ class Db(object):
 
 def init_db(src=None):
     if src is None:
-        Db._src = sqllite_src
-    Db._conn = sqlalchemy.create_engine(Db._src)
+        src = find_src()
+    Db._src = src
+    Db._conn = sqlalchemy.create_engine(src)
     Db._metadata = sqlalchemy.MetaData()
     # stop sqlalchemy from complaining about types (don't need them 
     # for now).
     logging.captureWarnings(True)
     Db._metadata.reflect(bind=Db._conn)
     logging.captureWarnings(False)
+
+def find_src():
+    cwd = os.getcwd()
+    sqlite_prefix = 'sqlite:///%s/%s'
+    filenames = os.listdir(cwd)
+    for f in filenames:
+        if f.endswith('.sqlite'):
+            return sqlite_prefix % (cwd, f)
+    raise ValueError('failure to locate suitable database file (%s)' % cwd)
