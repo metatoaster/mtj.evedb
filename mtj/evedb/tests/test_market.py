@@ -1,6 +1,6 @@
 from unittest import TestCase, TestSuite, makeSuite
 
-from evedb.market import Group
+from mtj.evedb.market import Group
 
 
 class TestMarketGroup(TestCase):

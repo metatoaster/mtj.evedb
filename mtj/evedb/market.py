@@ -1,5 +1,5 @@
 from sqlalchemy.sql import select
-from evedb.core import Db
+from mtj.evedb.core import Db
 
 
 # XXX class decorator of some sort can probably eliminate a lot of the
