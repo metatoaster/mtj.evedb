@@ -3,6 +3,7 @@ from os.path import dirname
 import logging
 
 import sqlalchemy
+from sqlalchemy.sql import select
 
 
 class Db(object):
@@ -31,6 +32,15 @@ class Db(object):
     @property
     def metadata(self):
         return Db._metadata
+
+    def execute(self, stmt):
+        results = self.conn.execute(stmt)
+        keys = results.keys()
+
+        data = []
+        for row in results:
+            data.append(dict(zip(keys, row)))
+        return data
 
 
 def init_db(src=None):

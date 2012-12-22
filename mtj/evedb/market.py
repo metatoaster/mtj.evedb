@@ -2,9 +2,6 @@ from sqlalchemy.sql import select
 from mtj.evedb.core import Db
 
 
-# XXX class decorator of some sort can probably eliminate a lot of the
-# following code duplication, but premature optimization and all that.
-
 class Group(Db):
 
     def getMarketGroups(self, parentGroupID=None):
@@ -27,13 +24,7 @@ class Group(Db):
             ).order_by(
                 invMarketGroups.c.marketGroupName)
 
-        results = self.conn.execute(stmt)
-        keys = results.keys()
-
-        data = []
-        for row in results:
-            data.append(dict(zip(keys, row)))
-        return data
+        return self.execute(stmt)
 
     def getMarketGroupItems(self, marketGroupID):
         """\
@@ -52,13 +43,7 @@ class Group(Db):
             ).order_by(
                 invTypes.c.typeName)
 
-        results = self.conn.execute(stmt)
-        keys = results.keys()
-
-        data = []
-        for row in results:
-            data.append(dict(zip(keys, row)))
-        return data
+        return self.execute(stmt)
 
     def getItemID(self, typeID):
         """\
@@ -77,13 +62,7 @@ class Group(Db):
             ).order_by(
                 invTypes.c.typeName)
 
-        results = self.conn.execute(stmt)
-        keys = results.keys()
-
-        data = []
-        for row in results:
-            data.append(dict(zip(keys, row)))
-        return data
+        return self.execute(stmt)
 
     def getItemName(self, name):
 
@@ -95,10 +74,4 @@ class Group(Db):
             ).order_by(
                 invTypes.c.typeName)
 
-        results = self.conn.execute(stmt)
-        keys = results.keys()
-
-        data = []
-        for row in results:
-            data.append(dict(zip(keys, row)))
-        return data
+        return self.execute(stmt)
