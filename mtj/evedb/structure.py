@@ -20,3 +20,27 @@ class ControlTower(Db):
                 table.c.typeName)
 
         return self.select(stmt)
+
+    def getControlTowerResource(self, typeID):
+        """
+        Get the resource consumption for a tower type
+
+        typeID
+            The typeID for a control tower
+        """
+
+        invTypes = self.metadata.tables['invTypes']
+        invCTRes = self.metadata.tables['invControlTowerResources']
+
+        stmt = select(
+                [invTypes.c.typeName, invCTRes], 
+                invCTRes.c.controlTowerTypeID == typeID,
+                invCTRes.join(invTypes, 
+                    invTypes.c.typeID == invCTRes.c.resourceTypeID)
+            )
+
+        results = self.select(stmt)
+        if not results:
+            raise ValueError('typeid is not a control tower')
+
+        return results
