@@ -24,7 +24,7 @@ class Group(Db):
             ).order_by(
                 invMarketGroups.c.marketGroupName)
 
-        return self.execute(stmt)
+        return self.select(stmt)
 
     def getMarketGroupItems(self, marketGroupID):
         """\
@@ -43,7 +43,7 @@ class Group(Db):
             ).order_by(
                 invTypes.c.typeName)
 
-        return self.execute(stmt)
+        return self.select(stmt)
 
     def getItemID(self, typeID):
         """\
@@ -62,7 +62,7 @@ class Group(Db):
             ).order_by(
                 invTypes.c.typeName)
 
-        return self.execute(stmt)
+        return self.select(stmt)
 
     def getItemName(self, name):
 
@@ -74,4 +74,4 @@ class Group(Db):
             ).order_by(
                 invTypes.c.typeName)
 
-        return self.execute(stmt)
+        return self.select(stmt)

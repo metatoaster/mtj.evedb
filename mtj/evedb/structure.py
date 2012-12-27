@@ -1,6 +1,8 @@
 from sqlalchemy.sql import select
 from mtj.evedb.core import Db
 
+CONTROL_TOWER_MARKET_GROUP = 478
+
 
 class ControlTower(Db):
 
@@ -13,8 +15,8 @@ class ControlTower(Db):
 
         stmt = select(
                 [table.c.typeID, table.c.typeName], 
-                table.c.marketGroupID == 478,
+                table.c.marketGroupID == CONTROL_TOWER_MARKET_GROUP,
             ).order_by(
                 table.c.typeName)
 
-        return self.execute(stmt)
+        return self.select(stmt)

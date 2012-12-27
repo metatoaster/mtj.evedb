@@ -1,9 +1,7 @@
 import os
-from os.path import dirname
 import logging
 
 import sqlalchemy
-from sqlalchemy.sql import select
 
 
 class Db(object):
@@ -34,13 +32,22 @@ class Db(object):
         return Db._metadata
 
     def execute(self, stmt):
-        results = self.conn.execute(stmt)
+        return self.conn.execute(stmt)
+
+    def select(self, stmt):
+        results = self.execute(stmt)
         keys = results.keys()
 
         data = []
         for row in results:
             data.append(dict(zip(keys, row)))
         return data
+
+    def selectUnique(self, stmt):
+        data = self.select(stmt)
+        if not data:
+            return None
+        return data[0]
 
 
 def init_db(src=None):
