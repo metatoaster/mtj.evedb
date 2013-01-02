@@ -36,17 +36,17 @@ class Db(object):
     def execute(self, stmt):
         return self.conn.execute(stmt)
 
-    def select(self, stmt):
+    def select(self, stmt, keys=None):
         results = self.execute(stmt)
-        keys = results.keys()
+        keys = keys or results.keys()
 
         data = []
         for row in results:
             data.append(dict(zip(keys, row)))
         return data
 
-    def selectUnique(self, stmt):
-        data = self.select(stmt)
+    def selectUnique(self, stmt, keys=None):
+        data = self.select(stmt, keys)
         if not data:
             return None
         return data[0]
