@@ -4,6 +4,7 @@ from sqlalchemy.sql import select
 from mtj.evedb.core import Db
 
 CONTROL_TOWER_MARKET_GROUP = 478
+CONTROL_TOWER_CAPACITY_SECONDARY = 1233
 
 
 class ControlTower(Db):
@@ -50,6 +51,21 @@ class ControlTower(Db):
             )
 
         return self.selectUnique(stmt)
+
+    def getControlTowerStrontCapacity(self, typeID):
+
+        table = self.metadata.tables['dgmTypeAttributes']
+
+        stmt = select(
+                [table.c.valueFloat],
+                and_(
+                    table.c.typeID == typeID,
+                    table.c.attributeID == CONTROL_TOWER_CAPACITY_SECONDARY,
+                )
+            )
+
+        return self.selectUnique(stmt, keys=['capacitySecondary'])
+
 
     def getControlTowerResource(self, typeID):
         """

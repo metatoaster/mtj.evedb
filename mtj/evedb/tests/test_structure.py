@@ -41,6 +41,11 @@ class StructureTestCase(TestCase):
         self.assertTrue((u'Amarr Fuel Block', 5) in fueltypes)
         self.assertTrue((u'Strontium Clathrates', 3) in fueltypes)
 
+    def test_1002_control_tower_stront(self):
+        pos = ControlTower()
+        results = pos.getControlTowerStrontCapacity(12235)
+        self.assertEqual(results['capacitySecondary'], 50000)
+
 
 def test_suite():
     suite = TestSuite()
