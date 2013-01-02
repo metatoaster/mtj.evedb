@@ -3,6 +3,8 @@ import logging
 
 import sqlalchemy
 
+MTJ_EVEDB_SRC = 'MTJ_EVEDB_SRC'
+
 
 class Db(object):
     """\
@@ -62,7 +64,15 @@ def init_db(src=None):
     Db._metadata.reflect(bind=Db._conn)
     logging.captureWarnings(False)
 
+def find_src_from_env():
+    return os.environ.get(MTJ_EVEDB_SRC)
+
 def find_src():
+    result = find_src_from_env()
+    if result:
+        return result
+
+    # last ditch effort, find _any_ sqlite file in current working dir.
     cwd = os.getcwd()
     sqlite_prefix = 'sqlite:///%s/%s'
     filenames = os.listdir(cwd)
