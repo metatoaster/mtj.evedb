@@ -45,6 +45,33 @@ class Group(Db):
 
         return self.select(stmt)
 
+    def getType(self, typeID=None, typeName=None):
+        """
+        Get an item by typeID.
+
+        typeID
+            The item to get.
+
+        """
+
+        table = self.metadata.tables['invTypes']
+
+        if typeID:
+            condition = table.c.typeID == typeID
+        elif itemName:
+            condition = table.c.typeName == typeName
+        else:
+            raise TypeError('either typeID or typeName must be provided.')
+
+        stmt = select(
+            # skip decimal columns and other unimportant columns.
+            [table.c.typeID, table.c.capacity, table.c.description,
+                table.c.raceID, table.c.volume, table.c.typeName,
+                table.c.mass, table.c.groupID, table.c.marketGroupID],
+            condition)
+
+        return self.selectUnique(stmt)
+
     def getItemID(self, typeID):
         """\
         Get an item by typeID.
