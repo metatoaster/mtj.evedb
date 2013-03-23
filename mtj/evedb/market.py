@@ -58,7 +58,7 @@ class Group(Db):
 
         if typeID:
             condition = table.c.typeID == typeID
-        elif itemName:
+        elif typeName:
             condition = table.c.typeName == typeName
         else:
             raise TypeError('either typeID or typeName must be provided.')
