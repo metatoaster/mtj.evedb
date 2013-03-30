@@ -1,15 +1,10 @@
-from unittest import TestCase, TestSuite, makeSuite
+from unittest import TestSuite, makeSuite
 
 from mtj.evedb.market import Group
+from mtj.evedb.tests.base import TestCase
 
 
 class TestMarketGroup(TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
 
     def test_0001_groupnames(self):
         group = Group()

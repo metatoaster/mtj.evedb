@@ -1,15 +1,10 @@
-from unittest import TestCase, TestSuite, makeSuite
+from unittest import TestSuite, makeSuite
 
 from mtj.evedb.structure import ControlTower
+from mtj.evedb.tests.base import TestCase
 
 
 class StructureTestCase(TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
 
     def test_0001_all_control_tower(self):
         pos = ControlTower()

@@ -1,15 +1,10 @@
-from unittest import TestCase, TestSuite, makeSuite
+from unittest import TestSuite, makeSuite
 
 from mtj.evedb.map import Map
+from mtj.evedb.tests.base import TestCase
 
 
 class MapTestCase(TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
 
     def test_0001_get_celestial(self):
         evemap = Map()
