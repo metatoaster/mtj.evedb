@@ -18,12 +18,7 @@ class Db(object):
     _src = None
 
     def __init__(self, src=None):
-        """\
-        Initializes a database connection to the provider.
-        """
-
-        if Db._src is None:
-            init_db(src)
+        pass
 
     @property
     def conn(self):
