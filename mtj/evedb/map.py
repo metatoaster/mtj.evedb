@@ -1,3 +1,4 @@
+from sqlalchemy import and_
 from sqlalchemy.sql import select
 from mtj.evedb.core import Db
 
@@ -47,3 +48,23 @@ class Map(Db):
         stmt = select([table], condition)
 
         return self.selectUnique(stmt)
+
+    def getCelestials(self, **kw):
+        """
+        Return all celestials using one of the parameters.
+        """
+
+        table = self.metadata.tables['mapDenormalize']
+
+        check = [getattr(table.c, k) == v for k, v in kw.iteritems()
+            if k in table.c.keys()]
+
+        if not check:
+            raise TypeError('need at least one of these keys: %s' %
+                table.c.keys())
+
+        condition = and_(*check)
+
+        stmt = select([table], condition)
+
+        return self.select(stmt)

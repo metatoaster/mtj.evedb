@@ -13,10 +13,10 @@ class MapTestCase(TestCase):
 
     def test_0001_get_celestial(self):
         evemap = Map()
-        result = evemap.getCelestial(40300803)
-        self.assertEqual(result['itemName'], u'K-6K16 V')
-        result = evemap.getCelestial(itemName=u'K-6K16 V')
-        self.assertEqual(result['itemID'], 40300803)
+        result = evemap.getCelestial(40300804)
+        self.assertEqual(result['itemName'], u'K-6K16 V - Moon 1')
+        result = evemap.getCelestial(itemName=u'K-6K16 V - Moon 1')
+        self.assertEqual(result['itemID'], 40300804)
         self.assertRaises(TypeError, evemap.getCelestial)
 
     def test_0001_get_solar_system(self):
