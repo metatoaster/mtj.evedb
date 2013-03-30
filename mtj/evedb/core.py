@@ -51,6 +51,15 @@ class Db(object):
             return None
         return data[0]
 
+    def hasTables(self, *tables):
+        """
+        Validate for the presence of tables.
+        """
+
+        all_tables = self.metadata.tables.keys()
+        results = [table in all_tables for table in tables]
+        return False not in results
+
 
 def init_db(src=None):
     if src is None:
