@@ -31,17 +31,21 @@ class Db(object):
     def execute(self, stmt):
         return self.conn.execute(stmt)
 
-    def select(self, stmt, keys=None):
+    def select(self, stmt, keys=None, key_replacements=None):
         results = self.execute(stmt)
         keys = keys or results.keys()
+
+        if key_replacements:
+            for k, v in key_replacements.iteritems():
+                keys[k] = v
 
         data = []
         for row in results:
             data.append(dict(zip(keys, row)))
         return data
 
-    def selectUnique(self, stmt, keys=None):
-        data = self.select(stmt, keys)
+    def selectUnique(self, stmt, keys=None, key_replacements=None):
+        data = self.select(stmt, keys, key_replacements)
         if not data:
             return None
         return data[0]
