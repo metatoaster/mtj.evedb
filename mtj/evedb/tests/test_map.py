@@ -18,6 +18,7 @@ class MapTestCase(TestCase):
         evemap = Map()
         result = evemap.getSolarSystem(30004751)
         self.assertEqual(result['solarSystemName'], u'K-6K16')
+        self.assertEqual(result['regionName'], u'Delve')
         result = evemap.getSolarSystem(solarSystemName=u'K-6K16')
         self.assertEqual(result['solarSystemID'], 30004751)
         self.assertRaises(TypeError, evemap.getSolarSystem)

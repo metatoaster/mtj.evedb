@@ -36,6 +36,7 @@ class Map(Db):
         """
 
         table = self.metadata.tables['mapSolarSystems']
+        denorm = self.metadata.tables['mapDenormalize']
 
         if solarSystemID:
             condition = table.c.solarSystemID == solarSystemID
@@ -45,9 +46,14 @@ class Map(Db):
             raise TypeError('either solarSystemID or solarSystemName must be '
                             'provided.')
 
-        stmt = select([table], condition)
+        stmt = select(
+                [table, denorm.c.itemName],
+                condition,
+                table.join(denorm,
+                    table.c.regionID == denorm.c.itemID)
+            )
 
-        return self.selectUnique(stmt)
+        return self.selectUnique(stmt, key_replacements={-1: 'regionName'})
 
     def getCelestials(self, **kw):
         """
