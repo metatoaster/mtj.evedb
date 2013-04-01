@@ -72,13 +72,7 @@ these statements within the same sqlite shell::
     begin transaction;
     -- Includes Deklein, Fountain, Delve and Aridia.
     insert into main.mapSolarSystems select * from orig.mapSolarSystems
-        where regionID=10000058;
-    insert into main.mapSolarSystems select * from orig.mapSolarSystems
-        where regionID=10000054;
-    insert into main.mapSolarSystems select * from orig.mapSolarSystems
-        where regionID=10000035;
-    insert into main.mapSolarSystems select * from orig.mapSolarSystems
-        where regionID=10000060;
+        where regionID in (10000058, 10000054, 10000035, 10000060);
     -- Just the selected systems needed and used by the tracker tests.
     insert into main.mapDenormalize select * from orig.mapDenormalize
         where typeID=14 and solarSystemID=30002904;
@@ -90,6 +84,9 @@ these statements within the same sqlite shell::
         where typeID=14 and solarSystemID=30004267;
     insert into main.mapDenormalize select * from orig.mapDenormalize
         where typeID=14 and solarSystemID=30004268;
+    -- and the regions.
+    insert into main.mapDenormalize select * from orig.mapDenormalize
+        where itemID in (10000058, 10000054, 10000035, 10000060);
     commit;
 
 Of course, a full set of data will be required for day-to-day running of
@@ -102,4 +99,7 @@ regions and systems, just do this::
     -- Just the moons are needed.
     insert into main.mapDenormalize select * from orig.mapDenormalize
         where typeID=14;
+    -- And the regions.
+    insert into main.mapDenormalize select * from orig.mapDenormalize
+        where typeID=3;
     commit;
