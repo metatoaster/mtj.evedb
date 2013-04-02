@@ -28,6 +28,11 @@ class StructureTestCase(TestCase):
         self.assertEqual(result['typeName'], u'Gallente Control Tower Medium')
         self.assertEqual(result['capacity'], 70000)
 
+    def test_0100_control_tower_resources(self):
+        pos = ControlTower()
+        results = pos.getControlTowerResources()
+        self.assertEqual(len(results), 11)
+
     def test_1001_control_tower_resource(self):
         pos = ControlTower()
         results = pos.getControlTowerResource(12235)

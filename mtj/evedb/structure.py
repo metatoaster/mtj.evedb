@@ -1,4 +1,4 @@
-from sqlalchemy import and_
+from sqlalchemy import and_, distinct
 from sqlalchemy.sql import select
 
 from mtj.evedb.core import Db
@@ -66,10 +66,26 @@ class ControlTower(Db):
 
         return self.selectUnique(stmt, keys=['capacitySecondary'])
 
+    def getControlTowerResources(self):
+        """
+        Get the resorces consumable by all control towers.
+        """
+
+        invTypes = self.metadata.tables['invTypes']
+        invCTRes = self.metadata.tables['invControlTowerResources']
+
+        stmt = select(
+                [distinct(invCTRes.c.resourceTypeID), invTypes.c.typeName,],
+                from_obj=invCTRes.join(invTypes, 
+                    invTypes.c.typeID == invCTRes.c.resourceTypeID)
+            )
+
+        results = self.select(stmt)
+        return results
 
     def getControlTowerResource(self, typeID):
         """
-        Get the resource consumption for a tower type
+        Get the resources that are consumed by a control tower.
 
         typeID
             The typeID for a control tower
