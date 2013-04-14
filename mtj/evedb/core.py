@@ -69,8 +69,12 @@ def init_db(src=None):
     # stop sqlalchemy from complaining about types (don't need them 
     # for now).
     logging.captureWarnings(True)
+    pywarnings = logging.getLogger('py.warnings')
+    o_propagate, pywarnings.propagate = pywarnings.propagate, False
     Db._metadata.reflect(bind=Db._conn)
+    # XXX figure out how to set to original value before invoking this?
     logging.captureWarnings(False)
+    pywarnings.propagate = o_propagate
 
 def find_src_from_env():
     return os.environ.get(MTJ_EVEDB_SRC)
